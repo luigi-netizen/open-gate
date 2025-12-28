@@ -28,7 +28,7 @@
 function openGate() {
   document.getElementById("msg").innerText = "Opening gate…";
 
-  fetch("https://https://shelly-217-eu.shelly.cloud/rpc/Switch.Set", {
+  fetch("https://shelly-217-eu.shelly.cloud/rpc/Switch.Set", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -42,7 +42,7 @@ function openGate() {
       }
     })
   })
-  .then(res => res.json())
+  .then(response => response.json())
   .then(data => {
     console.log(data);
 
@@ -53,8 +53,8 @@ function openGate() {
       document.getElementById("msg").innerText = "Gate opening ✔";
     }
   })
-  .catch(err => {
-    console.error(err);
+  .catch(error => {
+    console.error(error);
     document.getElementById("msg").innerText =
       "Network error. Please try again.";
   });
