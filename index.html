@@ -56,7 +56,7 @@
 
       try {
         const response = await fetch(
-          "https://shelly-217-eu.shelly.cloud/rpc/Switch.Set",
+          "https://shelly-217-eu.shelly.cloud:6022/jsonrpc",
           {
             method: "POST",
             headers: {
@@ -64,15 +64,21 @@
               "Authorization": "Bearer MzljNDg0dWlk9E9E36420081A7E20F54D6AD7E3B3956105C7428FD88F23D7BB2F0C25C1DAFDED4C6448C6FEE9E2C"
             },
             body: JSON.stringify({
-              id: 0,
-              on: true
+              jsonrpc: "2.0",
+              id: 1,
+              method: "Switch.Set",
+              params: {
+                id: 0,
+                on: true
+              }
             })
           }
         );
 
-        if (!response.ok) {
-          const t = await response.text();
-          throw new Error(t);
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+          throw new Error(JSON.stringify(data));
         }
 
         msg.innerText = "Gate opened ✔";
