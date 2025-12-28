@@ -56,13 +56,12 @@
 
       try {
         const response = await fetch(
-          "https://shelly.cloud/rpc/Switch.Set",
+          "https://shelly-217-eu.shelly.cloud/rpc/Switch.Set",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": "Bearer MzljNDg0dWlk9E9E36420081A7E20F54D6AD7E3B3956105C7428FD88F23D7BB2F0C25C1DAFDED4C6448C6FEE9E2C",
-              "X-Shelly-Device-ID": "30c9224ce5cc"
+              "Authorization": "Bearer MzljNDg0dWlk9E9E36420081A7E20F54D6AD7E3B3956105C7428FD88F23D7BB2F0C25C1DAFDED4C6448C6FEE9E2C"
             },
             body: JSON.stringify({
               id: 0,
@@ -72,13 +71,14 @@
         );
 
         if (!response.ok) {
-          throw new Error("HTTP " + response.status);
+          const t = await response.text();
+          throw new Error(t);
         }
 
         msg.innerText = "Gate opened ✔";
       } catch (err) {
-        msg.innerText = "Error opening gate. Please try again.";
         console.error(err);
+        msg.innerText = "Error opening gate. Please try again.";
       }
     }
   </script>
