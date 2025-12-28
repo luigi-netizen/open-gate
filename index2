@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Open Gate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family:Arial;text-align:center;margin-top:100px;">
+
+  <h2>Scialoia Garden Home</h2>
+
+  <button onclick="openGate()"
+    style="font-size:24px;padding:20px 40px;cursor:pointer;">
+    Open the main gate
+  </button>
+
+  <p id="msg"></p>
+
+<script>
+function openGate() {
+  document.getElementById("msg").innerText = "Opening gate…";
+
+  fetch("https://shelly-api-eu.shelly.cloud/rpc/Switch.Set", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id: "30c9224ce5cc",
+      auth_key: "MzljNDg0dWlk9E9E36420081A7E20F54D6AD7E3B3956105C7428FD88F23D7BB2F0C25C1DAFDED4C6448C6FEE9E2C",
+      params: {
+        id: 0,
+        on: true
+      }
+    })
+  })
+  .then(() => {
+    document.getElementById("msg").innerText = "Gate opening ✔";
+  })
+  .catch(() => {
+    document.getElementById("msg").innerText = "Error. Please try again.";
+  });
+}
+</script>
+
+</body>
+</html>
